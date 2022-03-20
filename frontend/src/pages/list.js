@@ -13,7 +13,7 @@ export default class List extends React.Component{
             list : [],
             id_list: "",
             catatan: "",
-            status: "",
+            status: "uncompleted",
             action: "",
             isModalOpen:false,
             selectedItem: null
@@ -52,7 +52,7 @@ export default class List extends React.Component{
             status: this.state.status
         }
         // console.log(data)
-        let url =""
+        let url ="http://localhost:4880/list/save"
         //setting url
         if (this.state.action === "insert") {
             url = "http://localhost:4880/list/save"
@@ -176,7 +176,7 @@ export default class List extends React.Component{
         })
     }
     componentDidMount = () => {
-        this.getUncompleted()
+        this.getList()
     }
     render(){
         return(
@@ -194,7 +194,9 @@ export default class List extends React.Component{
                             <form onSubmit={e => this.handleSave(e)}> 
                             <div className="input-group mb-3">
                                 <input type="text" name="catatan" className="form-control" placeholder="new task"
-                                        onChange={this.handleChange}/>
+                                         onChange={this.handleChange}/>
+                                <input type="hidden" name="status" className="form-control" placeholder="new task"
+                                         value={this.state.status} onChange={this.handleChange}/>
                                 <button className="btn btn-warning" type="submit">
                                     Tambahkan
                                 </button>
@@ -202,13 +204,13 @@ export default class List extends React.Component{
                             </form>
                             <tr className="text-center my-3">
                             <div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
-                                {/* <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onClick={e => this.getList(e)} defaultChecked/>
-                                <label class="btn btn-outline-warning" for="btnradio1">All</label> */}
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onClick={e => this.getList(e)} defaultChecked/>
+                                <label class="btn btn-outline-warning" for="btnradio1">All</label>
 
                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onClick={e => this.getCompleted(e)}/>
                                 <label class="btn btn-outline-warning" for="btnradio2">Completed</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onClick={e => this.getUncompleted(e)} defaultChecked/>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onClick={e => this.getUncompleted(e)}/>
                                 <label class="btn btn-outline-warning" for="btnradio3">Uncompleted</label>
                             </div>
                             </tr>
